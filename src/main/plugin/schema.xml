@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="humanFriendlyURL">
+	<table name="humanFriendlyURLMap" description="Table for human friendly URL map between HF Title and Doc ID">
+		<column name="id" type="bigint" nullable="false" description="Primary key"/>
+		<column name="documentID" type="varchar" size="255" nullable="false" description="Document ID"/>
+		<column name="hfTitle" type="varchar" size="255" nullable="false" description="Human friendly Title"/>
+		<column name="actualTitle" type="int" nullable="false" description="Flag if title is actual or archive"/>
+		<index type="primary" name="hfURLMap_pk" column="id"/>
+		<index type="normal" name="hfURLMap_documentID_idx" column="documentID"/>
+		<index type="normal" name="hfURLMap_hfTitle_idx" column="hfTitle"/>
+	</table>
+</schema>

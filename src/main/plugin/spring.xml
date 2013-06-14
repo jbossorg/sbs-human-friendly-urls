@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd"
+	   default-autowire="no" default-init-method="init" default-destroy-method="destroy">
+
+	<bean id="hfURLPlugin" class="org.jboss.labs.clearspace.plugin.hfurl.HFURLPlugin">
+		<property name="dbHFURLManager" ref="hfURLManager"/>
+		<property name="eventListenerRegistry" ref="eventListenerRegistry"/>
+		<property name="hfURLMapping" ref="hfURLMapping"/>
+		<property name="actionMapper" ref="jiveActionMapper"/>
+	</bean>
+
+	<bean id="hfURLMapping"
+		  class="org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping">
+		<property name="hfURLManager" ref="hfURLManager"/>
+	</bean>
+
+	<bean id="hfURLIDsCache" parent="cacheBean" depends-on="cacheFactoryManager">
+		<constructor-arg value="Human friendly URLs index (Document IDs)"/>
+	</bean>
+
+	<bean id="hfURLTitlesCache" parent="cacheBean" depends-on="cacheFactoryManager">
+		<constructor-arg value="Human friendly URLs index (HF Titles)"/>
+	</bean>
+
+	<bean id="hfURLManager" class="org.jboss.labs.clearspace.plugin.hfurl.DbHFURLManager">
+		<property name="hfURLIDsCache" ref="hfURLIDsCache"/>
+		<property name="hfURLTitlesCache" ref="hfURLTitlesCache"/>
+		<property name="hfURLDAO" ref="hfURLDAO"/>
+		<property name="documentManager" ref="documentManager"/>
+		<property name="hfULRPrefix" value="/wiki"/>
+		<property name="docIdURLPrefix" value="/docs"/>
+
+		<dwr:remote javascript="HFURLManager">
+			<dwr:include method="getHFURL"/>
+		</dwr:remote>
+	</bean>
+
+	<bean id="hfURLDAO"
+		  class="org.jboss.labs.clearspace.plugin.hfurl.dao.DbHFURLDAOImpl">
+		<property name="dataSource">
+			<util:property-path path="dataSourceFactory.dataSource"/>
+		</property>
+	</bean>
+
+	<bean id="hfURLComponent"
+		  class="org.jboss.labs.clearspace.plugin.hfurl.struts.components.HFURLComponent"
+		  lazy-init="true" scope="prototype">
+		<constructor-arg index="0">
+			<null/>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<null/>
+		</constructor-arg>
+		<constructor-arg index="2">
+			<null/>
+		</constructor-arg>
+
+		<property name="hfURLManager" ref="hfURLManager"/>
+	</bean>
+</beans>

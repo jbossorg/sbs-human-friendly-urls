@@ -1,0 +1,52 @@
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="http://www.jivesoftware.com/schemas/clearspace/2_5/plugin.xsd">
+	<name>${project.artifactId}</name>
+	<description>${project.description}</description>
+	<author>${project.developers[0].name}</author>
+	<authorURL>${project.developers[0].url}</authorURL>
+	<pluginURL>${project.url}</pluginURL>
+	<version>${project.version}</version>
+	<minServerVersion>${sbs.min.version}</minServerVersion>
+	<maxServerVersion>${sbs.max.version}</maxServerVersion>
+
+	<!-- Plugin class -->
+	<class>org.jboss.labs.clearspace.plugin.hfurl.HFURLPlugin</class>
+
+	<!-- URL Mapping for human friendly URLs -->
+	<!--
+		Defined during initialization of plugin instead of this declaration:
+		Prefix is defined in spring.xml in bean hfURLManager, property
+		hfURLPrefix <urlmapping prefix="/wiki"
+		class="org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping"/>
+	  -->
+
+
+	<sitemesh>
+		<decorator name="default" page="default/template.ftl">
+			<pattern>/wiki*</pattern>
+		</decorator>
+	</sitemesh>
+
+	<databaseKey>humanFriendlyURL</databaseKey>
+	<databaseVersion>2</databaseVersion>
+
+	<components>
+		<component id="admin-console">
+			<tab id="system">
+				<section id="section-system">
+					<item id="system-hf-urls" name="plugin.hfurl.admin.hf-urls.name"
+						  url="human-friendly-urls-view.jspa" description="plugin.hfurl.admin.hf-urls.description"/>
+				</section>
+			</tab>
+		</component>
+		<component id="document-actions">
+			<tab id="document-actions-tab">
+				<item id="jboss-link-document-permlink" name="plugin.hfurl.document-actions-tab.permlink"
+					  cssClass="jive-icon-med link-permlink">
+					<url><![CDATA[<@s.url value='/' encode='false' />docs/${document.documentID}]]></url>
+				</item>
+			</tab>
+		</component>
+	</components>
+
+</plugin>

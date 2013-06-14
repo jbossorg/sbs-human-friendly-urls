@@ -1,0 +1,86 @@
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+		"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="hfurl-actions" namespace="/hfurl" extends="community-actions">
+
+		<!-- wiki navigation - when there are more then one document relevant to HF URL then show this page -->
+		<action name="wikiNavigation" class="org.jboss.labs.clearspace.plugin.hfurl.struts.NavigationAction">
+			<result name="success" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/navigation.ftl
+			</result>
+		</action>
+
+		<action name="wikiNotFound" class="com.jivesoftware.community.action.JiveActionSupport">
+			<result name="success" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/notfound.ftl
+			</result>
+		</action>
+
+		<action name="oldWikiUrl" class="org.jboss.labs.clearspace.plugin.hfurl.struts.RedirectToUrl">
+			<result name="success" type="httpheader">
+				<param name="status">301</param>
+				<param name="headers.Location">${urlToRedirect}</param>
+				<param name="parse">true</param>
+			</result>
+		</action>
+
+		<action name="redirectToHFURL" class="org.jboss.labs.clearspace.plugin.hfurl.struts.RedirectToHFURLAction">
+			<result name="success" type="httpheader">
+				<param name="status">301</param>
+				<param name="headers.Location">${urlToRedirect}</param>
+				<param name="parse">true</param>
+			</result>
+			<result name="input" type="httpheader">
+				<param name="status">302</param>
+				<param name="headers.Location">${urlToRedirect}</param>
+				<param name="parse">true</param>
+			</result>
+			<result name="urlNotDefined" type="redirect">/</result>
+		</action>
+
+	</package>
+
+	<package name="hfurl-actions-admin" namespace="/admin" extends="community-admin-default">
+
+		<action name="human-friendly-urls-view" class="org.jboss.labs.clearspace.plugin.hfurl.struts.AdminHfURLAction"
+				method="input">
+			<result name="input" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+		</action>
+
+		<action name="human-friendly-urls-reindex"
+				class="org.jboss.labs.clearspace.plugin.hfurl.struts.AdminHfURLAction">
+			<result name="input" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+			<result name="success" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+		</action>
+
+		<action name="human-friendly-urls-enable" class="org.jboss.labs.clearspace.plugin.hfurl.struts.AdminHfURLAction"
+				method="enable">
+			<result name="input" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+			<result name="success" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+		</action>
+
+		<action name="human-friendly-urls-disable"
+				class="org.jboss.labs.clearspace.plugin.hfurl.struts.AdminHfURLAction"
+				method="disable">
+			<result name="input" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+			<result name="success" type="freemarker">
+				/plugins/human-friendly-urls/resources/templates/admin/human-friendly-urls.ftl
+			</result>
+		</action>
+
+
+	</package>
+
+</struts>

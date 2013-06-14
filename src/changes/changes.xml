@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+
+	<properties>
+		<title>SBS plugin: Human friendly URL</title>
+		<author email="lkrzyzan@redhat.com">Libor Krzyzanek</author>
+	</properties>
+
+	<body>
+		<release version="3.0.1" date="2011-11-24" description="Small perf. tuning">
+			<action>
+				<fixes issue="ORG-1242"/>
+			</action>
+		</release>
+
+		<release version="3.0.0" date="2010-08-18" description="Capitalized URLs, Old article's subject supported">
+			<action>
+				<fixes issue="ORG-537"/>
+				<fixes issue="ORG-948"/>
+			</action>
+		</release>
+
+		<release version="2.1.2" date="2010-08-18" description="Bug fix release">
+			<action>
+				<fixes issue="ORG-982"/>
+			</action>
+		</release>
+
+		<release version="2.1.0" date="2010-08-18" description="Upgrade to work with SBS 4.5.x">
+		</release>
+
+		<release version="2.0.0" date="2010-02-23" description="Upgrade to work with SBS 4.x">
+		</release>
+
+
+		<release version="1.1.1" date="2009-12-03" description="Upgrade to Java 6">
+			<action type="fix" dev="lkrzyzan" date="2009-12-03">
+				<fixes issue="ORG-353"/>
+			</action>
+		</release>
+
+		<release version="1.1.0" date="2009-04-27" description="New feature release">
+			<action type="add" dev="lkrzyzan" date="2009-04-27">
+				<fixes issue="ORG-198"/>
+				<fixes issue="ORG-190"/>
+			</action>
+		</release>
+
+		<release version="1.0.1" date="2009-04-10" description="Bug fix release">
+			<action type="fix" dev="lkrzyzan" date="2009-04-08">
+				<fixes issue="ORG-174"/>
+				<fixes issue="ORG-175"/>
+			</action>
+		</release>
+
+		<release version="1.0.0" date="2009-04-01" description="Initial version"/>
+
+	</body>
+
+</document>
