@@ -42,7 +42,7 @@
 		<component id="document-actions">
 			<tab id="document-actions-tab">
 				<item id="jboss-link-document-permlink" name="plugin.hfurl.document-actions-tab.permlink"
-					  cssClass="jive-icon-med link-permlink">
+					  cssClass="jive-icon-med jive-icon-document-bookmark">
 					<url><![CDATA[<@s.url value='/' encode='false' />docs/${document.documentID}]]></url>
 				</item>
 			</tab>
