@@ -15,6 +15,7 @@ import org.jboss.labs.clearspace.plugin.hfurl.DbHFURLManager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,8 +73,7 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		// Reset ID sequencer to 0 - unfortunately it's not possible
 
 		log.info("Create titles for published versions");
-		@SuppressWarnings("unchecked")
-		final List<String[]> actualTitles = (List<String[]>) getJdbcTemplate().query(
+		final List<String[]> actualTitles = getJdbcTemplate().query(
 				SELECT_ALL_DOCUMENTS + " and v.state='published'", new DocIdTitleExtractor());
 
 		List<String> addedTitles = new ArrayList<String>();
@@ -84,8 +84,7 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		}
 
 		log.info("Create titles for archived versions");
-		@SuppressWarnings("unchecked")
-		final List<String[]> archiveTitles = (List<String[]>) getJdbcTemplate().query(
+		final List<String[]> archiveTitles = getJdbcTemplate().query(
 				SELECT_ALL_DOCUMENTS + " and v.state='archived'", new DocIdTitleExtractor());
 
 		for (String[] values : archiveTitles) {
@@ -112,8 +111,7 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		log.info("Create titles for published versions");
 		String actualHFTitle = null;
 
-		@SuppressWarnings("unchecked")
-		final List<String[]> actualTitles = (List<String[]>) getJdbcTemplate().query(
+		final List<String[]> actualTitles = getJdbcTemplate().query(
 				SELECT_ALL_DOCUMENTS + " and v.state='published' and d.documentID = ?", new Object[]{documentID},
 				new DocIdTitleExtractor());
 
@@ -126,8 +124,7 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		}
 
 		log.info("Create titles for archived versions");
-		@SuppressWarnings("unchecked")
-		final List<String[]> archiveTitles = (List<String[]>) getJdbcTemplate().query(
+		final List<String[]> archiveTitles = getJdbcTemplate().query(
 				SELECT_ALL_DOCUMENTS + " and v.state='archived' and d.documentID = ?", new Object[]{documentID},
 				new DocIdTitleExtractor());
 
@@ -193,7 +190,8 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		getSimpleJdbcTemplate().update(DELETE_HFURL_ENTRY_BY_DOCUMENT_ID, documentId);
 	}
 
-	static final class HfURLMapMapper implements ParameterizedRowMapper<HFURLBean> {
+	static final class HfURLMapMapper implements RowMapper<HFURLBean> {
+		@Override
 		public HFURLBean mapRow(ResultSet rs, int rowNum) throws SQLException {
 			HFURLBean uct = new HFURLBean();
 			uct.setId(rs.getLong("id"));
@@ -204,8 +202,9 @@ public class DbHFURLDAOImpl extends JiveJdbcDaoSupport implements HFURLDAO {
 		}
 	}
 
-	class DocIdTitleExtractor implements ResultSetExtractor {
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+	class DocIdTitleExtractor implements ResultSetExtractor<List<String[]>> {
+		@Override
+		public List<String[]> extractData(ResultSet rs) throws SQLException, DataAccessException {
 			List<String[]> titles = new ArrayList<String[]>();
 			while (rs.next()) {
 				String hfTitle = DbHFURLManager.createHFURLTitle(rs.getString(2));

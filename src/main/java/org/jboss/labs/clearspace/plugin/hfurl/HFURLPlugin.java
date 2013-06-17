@@ -18,7 +18,7 @@ import org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping;
  *
  * @author <a href="mailto:lkrzyzan@redhat.com">Libor Krzyzanek</a>
  */
-public class HFURLPlugin implements Plugin<HFURLPlugin> {
+public class HFURLPlugin implements Plugin {
 
 	/**
 	 * Logger
@@ -43,7 +43,8 @@ public class HFURLPlugin implements Plugin<HFURLPlugin> {
 
 	public static final String HFURL_ENABLED_KEY = "hfurl.links.enabled";
 
-	public void init() {
+	@Override
+	public void initPlugin() {
 		log.debug("Init " + PLUGIN_NAME);
 
 		// cannot use urlmapping in plugin.xml - mapping class is not managed by
@@ -61,6 +62,7 @@ public class HFURLPlugin implements Plugin<HFURLPlugin> {
 		log.debug("Initialize completed of plugin " + PLUGIN_NAME);
 	}
 
+	@Override
 	public void destroy() {
 		eventListenerRegistry.unregister(dbHFURLManager);
 

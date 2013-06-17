@@ -36,8 +36,6 @@ public class NavigationAction extends JiveActionSupport {
 
 	protected DocumentManager documentManager;
 
-	private CommunityManager communityManager;
-
 	@Override
 	public String execute() {
 		for (String docId : docIds) {
@@ -99,10 +97,6 @@ public class NavigationAction extends JiveActionSupport {
 
 	public void setDocumentManager(DocumentManager documentManager) {
 		this.documentManager = documentManager;
-	}
-
-	public void setCommunityManager(CommunityManager communityManager) {
-		this.communityManager = communityManager;
 	}
 
 	public String getUrlSuffix() {
