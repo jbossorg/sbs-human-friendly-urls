@@ -32,7 +32,7 @@ http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.
 		<property name="hfURLIDsCache" ref="hfURLIDsCache"/>
 		<property name="hfURLTitlesCache" ref="hfURLTitlesCache"/>
 		<property name="hfURLDAO" ref="hfURLDAO"/>
-		<property name="documentManager" ref="documentManager"/>
+		<property name="documentManager" ref="documentManagerImpl"/>
 		<property name="hfULRPrefix" value="/wiki"/>
 		<property name="docIdURLPrefix" value="/docs"/>
 
