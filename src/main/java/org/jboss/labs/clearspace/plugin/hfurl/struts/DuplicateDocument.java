@@ -6,6 +6,7 @@
 package org.jboss.labs.clearspace.plugin.hfurl.struts;
 
 import com.jivesoftware.community.Community;
+import com.jivesoftware.community.JiveContainer;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -23,7 +24,7 @@ public class DuplicateDocument {
 
 	private String subject;
 
-	private List<Community> communities;
+	private List<JiveContainer> communities;
 
 	/**
 	 * Get Document ID
@@ -52,11 +53,11 @@ public class DuplicateDocument {
 		this.subject = subject;
 	}
 
-	public void setCommunities(List<Community> communities) {
+	public void setCommunities(List<JiveContainer> communities) {
 		this.communities = communities;
 	}
 
-	public List<Community> getCommunities() {
+	public List<JiveContainer> getCommunities() {
 		return communities;
 	}
 

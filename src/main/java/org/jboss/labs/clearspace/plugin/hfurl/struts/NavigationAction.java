@@ -39,16 +39,22 @@ public class NavigationAction extends JiveActionSupport {
 	public String execute() {
 		for (String docId : docIds) {
 			try {
-				if (log.isTraceEnabled()) {
-					log.trace("Adding doc in navigation: " + docId);
-				}
 				Document doc = documentManager.getDocument(docId);
-
+				if (log.isTraceEnabled()) {
+					log.trace("Adding doc in navigation: " + docId + ", container type: " + doc.getContainerType());
+				}
 				DuplicateDocument dupDoc = new DuplicateDocument();
 				dupDoc.setDocumentID(doc.getDocumentID());
 				dupDoc.setSubject(doc.getSubject());
 
-				dupDoc.setCommunities(getCommunities(doc));
+				if (doc.getContainerType() == JiveConstants.COMMUNITY) {
+					dupDoc.setCommunities(getCommunities(doc));
+				} else {
+					List<JiveContainer> containers = new ArrayList<JiveContainer>(2);
+					containers.add(communityManager.getRootCommunity());
+					containers.add(doc.getJiveContainer());
+					dupDoc.setCommunities(containers);
+				}
 
 				documents.add(dupDoc);
 			} catch (DocumentObjectNotFoundException e) {
@@ -67,11 +73,14 @@ public class NavigationAction extends JiveActionSupport {
 		return SUCCESS;
 	}
 
-	protected List<Community> getCommunities(Document doc)
+	protected List<JiveContainer> getCommunities(Document doc)
 			throws CommunityNotFoundException, UnauthorizedException {
+		if (log.isTraceEnabled()) {
+			log.trace("Getting Community: " + doc.getContainerID());
+		}
 		Community community = communityManager.getCommunity(doc.getContainerID());
 
-		List<Community> communities = new ArrayList<Community>();
+		List<JiveContainer> communities = new ArrayList<JiveContainer>();
 
 		if (community != null
 				&& community.getID() != communityManager.getRootCommunity().getID()) {
