@@ -10,7 +10,6 @@ import com.jivesoftware.community.*;
 import com.jivesoftware.community.action.JiveActionSupport;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class NavigationAction extends JiveActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = LogManager.getLogger(HFURLMapping.class);
+	private static final Logger log = LogManager.getLogger(NavigationAction.class);
 
 	private List<String> docIds;
 
@@ -40,6 +39,9 @@ public class NavigationAction extends JiveActionSupport {
 	public String execute() {
 		for (String docId : docIds) {
 			try {
+				if (log.isTraceEnabled()) {
+					log.trace("Adding doc in navigation: " + docId);
+				}
 				Document doc = documentManager.getDocument(docId);
 
 				DuplicateDocument dupDoc = new DuplicateDocument();
@@ -53,9 +55,13 @@ public class NavigationAction extends JiveActionSupport {
 				log.error("Document not found for duplicated HF URL.", e);
 				// TODO Probably we can remove record from HF URL Map
 			} catch (CommunityNotFoundException e) {
-
+				log.warn("Community not found for doc", e);
 			}
 			// TODO Catch and handle UnauthorizedException
+		}
+
+		if (log.isTraceEnabled()) {
+			log.trace("Duplicate Documents: " + documents);
 		}
 
 		return SUCCESS;
