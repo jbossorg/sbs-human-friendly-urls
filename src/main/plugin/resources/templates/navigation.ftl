@@ -7,6 +7,12 @@
 
 	<content tag="breadcrumb">
 	</content>
+
+	<style>
+		ul.hfurl-navigation {
+			margin: 10px 20px;
+		}
+	</style>
 </head>
 <body class="jive-body-formpage">
 <div id="jive-content">
@@ -15,7 +21,7 @@
 	</header>
 	<section class="jive-content-body">
 		<p><@s.text name="plugin.hfurl.navigation.description" /></p>
-		<ul style="margin: 10px 20px;">
+		<ul class="hfurl-navigation">
 		<#list documents as doc>
 			<li>
 			<#--
