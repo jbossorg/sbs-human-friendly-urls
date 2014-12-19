@@ -14,10 +14,9 @@ Installation steps
 5. Add rule to the Apache rewrite module which redirects every /docs/DOC-1234 request to HF URL and then reload apache configuration:
 
 
-	RewriteCond %{QUERY_STRING} !^.*uniqueTitle=false.*$
-	RewriteCond %{REQUEST_URI} !^.*/restore.*$
-	RewriteCond %{REQUEST_URI} !^.*/delete.*$
-	RewriteRule ^/docs/DOC-(.*) /hfurl/redirectToHFURL.jspa?url=/docs/DOC-$1&params=%{QUERY_STRING} [R=301,L]
-
+		RewriteCond %{QUERY_STRING} !^.*uniqueTitle=false.*$
+		RewriteCond %{REQUEST_URI} !^.*/restore.*$
+		RewriteCond %{REQUEST_URI} !^.*/delete.*$
+		RewriteRule ^/docs/DOC-(.*) /hfurl/redirectToHFURL.jspa?url=/docs/DOC-$1&params=%{QUERY_STRING} [R=301,L]
 
 
