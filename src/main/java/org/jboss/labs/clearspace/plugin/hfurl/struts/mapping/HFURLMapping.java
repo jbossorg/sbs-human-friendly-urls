@@ -5,17 +5,18 @@
  */
 package org.jboss.labs.clearspace.plugin.hfurl.struts.mapping;
 
-import com.jivesoftware.community.JiveGlobals;
-import com.jivesoftware.community.web.struts.mapping.DocURLMapping;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.jboss.labs.clearspace.plugin.hfurl.HFURLManager;
 import org.jboss.labs.clearspace.plugin.hfurl.dao.HFURLBean;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.jivesoftware.community.JiveGlobals;
+import com.jivesoftware.community.web.struts.mapping.DocURLMapping;
 
 /**
  * Process document Human friendly URIs into standard CS doc url.<br>
@@ -38,9 +39,9 @@ public class HFURLMapping extends DocURLMapping {
 
 	@SuppressWarnings("unchecked")
 	public void process(String uri, ActionMapping mapping) {
-		Map<String, String> params = mapping.getParams();
+		Map<String, Object> params = mapping.getParams();
 		if (null == params) {
-			params = new HashMap<String, String>();
+			params = new HashMap<>();
 		}
 		uri = convertHFURL2StandardURL(uri, params);
 		mapping.setParams(params);
@@ -66,7 +67,7 @@ public class HFURLMapping extends DocURLMapping {
 	 * @return /docs/DOC-XXXX or value of {@link #DOC_NOT_FOUND} or
 	 *         {@link #DOC_MORE_THAN_ONE} or {@link #OLD_WIKI_URL}
 	 */
-	protected String convertHFURL2StandardURL(String uri, Map<String, String> params) {
+	protected String convertHFURL2StandardURL(String uri, Map<String, Object> params) {
 		String[] uriElements = uri.split("/");
 		if (uriElements.length > 2) {
 			// in this case try to switch from HF URL to standard CS URL

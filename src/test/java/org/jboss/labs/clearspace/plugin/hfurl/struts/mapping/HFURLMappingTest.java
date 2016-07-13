@@ -21,8 +21,6 @@
  */
 package org.jboss.labs.clearspace.plugin.hfurl.struts.mapping;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +31,8 @@ import org.jboss.labs.clearspace.plugin.hfurl.dao.HFURLBean;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests of HFURLMapping
@@ -122,12 +122,12 @@ public class HFURLMappingTest {
 
   /**
    * Test method for
-   * {@link org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping#convertHFURL2StandardURL(java.lang.String)}
+   * {@link org.jboss.labs.clearspace.plugin.hfurl.struts.mapping.HFURLMapping#convertHFURL2StandardURL(String, Map)}
    * .
    */
   @Test
   public void testConvertHFURL2StandardURL() {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, Object> params = new HashMap<>();
 
     assertEquals("/docs/DOC-1234", actionMapping.convertHFURL2StandardURL("/wiki/JDKs", params));
     assertEquals("/docs/DOC-1234.pdf", actionMapping.convertHFURL2StandardURL("/wiki/JDKs.pdf", params));
@@ -147,21 +147,21 @@ public class HFURLMappingTest {
 
     assertEquals(HFURLMapping.DOC_NOT_FOUND, actionMapping.convertHFURL2StandardURL("/wiki/nonExisting", params));
 
-    Map<String, String> redirectParams = new HashMap<String, String>();
+    Map<String, Object> redirectParams = new HashMap<>();
     assertEquals(HFURLMapping.OLD_WIKI_URL, actionMapping.convertHFURL2StandardURL("/wiki/oldtitle1", redirectParams));
 
-    Map<String, String> duplicateParams = new HashMap<String, String>();
+    Map<String, Object> duplicateParams = new HashMap<>();
     assertEquals(HFURLMapping.DOC_MORE_THAN_ONE,
         actionMapping.convertHFURL2StandardURL("/wiki/duplicate", duplicateParams));
     assertEquals(DOC1.getDocumentID(), duplicateParams.get("docIds[0]"));
     assertEquals(DOC2.getDocumentID(), duplicateParams.get("docIds[1]"));
 
-    duplicateParams = new HashMap<String, String>();
+    duplicateParams = new HashMap<>();
     assertEquals(HFURLMapping.DOC_MORE_THAN_ONE,
         actionMapping.convertHFURL2StandardURL("/wiki/duplicate/edit", duplicateParams));
     assertEquals("edit", duplicateParams.get("urlSuffix"));
 
-    duplicateParams = new HashMap<String, String>();
+    duplicateParams = new HashMap<>();
     assertEquals(HFURLMapping.DOC_MORE_THAN_ONE,
         actionMapping.convertHFURL2StandardURL("/wiki/duplicate/version/1", duplicateParams));
     assertEquals("version/1", duplicateParams.get("urlSuffix"));

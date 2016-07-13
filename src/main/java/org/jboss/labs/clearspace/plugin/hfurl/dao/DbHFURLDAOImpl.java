@@ -5,9 +5,12 @@
  */
 package org.jboss.labs.clearspace.plugin.hfurl.dao;
 
-import com.jivesoftware.base.database.dao.DAOException;
-import com.jivesoftware.base.database.dao.JiveJdbcDaoSupport;
-import com.jivesoftware.base.database.sequence.SequenceManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,14 +19,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.jivesoftware.base.database.dao.DAOException;
+import com.jivesoftware.base.database.dao.JiveJdbcDaoSupport;
+import com.jivesoftware.base.database.sequence.SequenceManager;
 
 /**
  * DB Implementation of HF URL DAO
