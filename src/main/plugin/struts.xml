@@ -35,6 +35,9 @@
 				<param name="headers.Location">${urlToRedirect}</param>
 				<param name="parse">true</param>
 			</result>
+			<result name="badRequest" type="httpheader">
+				<param name="status">400</param>
+			</result>
 			<result name="urlNotDefined" type="redirect">/</result>
 		</action>
 

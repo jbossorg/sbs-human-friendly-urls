@@ -54,10 +54,16 @@ public class RedirectToHFURLAction extends JiveActionSupport {
 
   public static final String URL_NOT_DEFINED_RESULT = "urlNotDefined";
 
+  public static final String BAD_REQUEST_RESULT = "badRequest";
+
   public String execute() {
     if (url == null || url.trim().equals("")) {
       urlToRedirect = "/";
       return URL_NOT_DEFINED_RESULT;
+    }
+    if (!url.startsWith("/docs/")) {
+      // prevent Open Redirect vulnerability
+      return BAD_REQUEST_RESULT;
     }
 
     if (params != null && params.length() > 0) {
