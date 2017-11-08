@@ -8,12 +8,12 @@
 	<name>human-friendly-urls</name>
 	<description>Human friendly URLs for documents</description>
 	<url>https://github.com/jbossorg/sbs-human-friendly-urls</url>
-	<version>8.0.1</version>
+	<version>9.0.0</version>
 
 	<parent>
 		<groupId>com.jivesoftware.maven</groupId>
 		<artifactId>jive-parent-pom</artifactId>
-		<version>8.0.4.0-3</version>
+		<version>9.0.2.1-0</version>
 	</parent>
 
 	<inceptionYear>2009</inceptionYear>
